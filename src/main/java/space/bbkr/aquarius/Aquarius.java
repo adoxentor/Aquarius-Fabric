@@ -6,6 +6,7 @@ import net.fabricmc.fabric.api.entity.FabricEntityTypeBuilder;
 import net.fabricmc.fabric.api.loot.v1.FabricLootPoolBuilder;
 import net.fabricmc.fabric.api.loot.v1.event.LootTableLoadingCallback;
 import net.fabricmc.fabric.api.tag.TagRegistry;
+import net.minecraft.block.AbstractBlock;
 import net.minecraft.block.Block;
 import net.minecraft.block.Material;
 import net.minecraft.block.entity.BlockEntity;
@@ -27,7 +28,7 @@ public class Aquarius implements ModInitializer {
 	
 	public static final String MODID = "aquarius";
 
-	public static final Block CHORUS_CONDUIT = register("chorus_conduit", new ChorusConduitBlock(FabricBlockSettings.of(Material.GLASS).strength(3.0F, 3.0F).lightLevel(15).build()), ItemGroup.MISC);
+	public static final Block CHORUS_CONDUIT = register("chorus_conduit", new ChorusConduitBlock(AbstractBlock.Settings.of(Material.GLASS).strength(3.0F, 3.0F).lightLevel(state->15)), ItemGroup.MISC);
 	public static final Item FLIPPERS = register("flippers", new ArmorItem(ArmorMaterials.TURTLE, EquipmentSlot.FEET, new Item.Settings().group(ItemGroup.COMBAT)));
     public static final Item PRISMARINE_ROD = register("prismarine_rod", new Item(new Item.Settings().group(ItemGroup.MISC)));
     public static final BlockEntityType<ChorusConduitBlockEntity> CHORUS_CONDUIT_BE = register("chorus_conduit", ChorusConduitBlockEntity::new, CHORUS_CONDUIT);
@@ -37,7 +38,7 @@ public class Aquarius implements ModInitializer {
 
 	public static final Enchantment GUARDIAN_SIGHT = register("guardian_sight", new GuardianSightEnchantment());
 
-	public static final EntityType<TridentBeamEntity> TRIDENT_BEAM = register("trident_beam", EntityCategory.MISC, EntityDimensions.changing(0.5F, 0.5F), ((entityType, world) -> new TridentBeamEntity(world)));
+	public static final EntityType<TridentBeamEntity> TRIDENT_BEAM = register("trident_beam",SpawnGroup.MISC, EntityDimensions.changing(0.5F, 0.5F), ((entityType, world) -> new TridentBeamEntity(world)));
 
 	@Override
 	public void onInitialize() {
@@ -45,9 +46,8 @@ public class Aquarius implements ModInitializer {
 			if (id.equals(new Identifier("minecraft", "chests/shipwreck_treasure"))) {
 				supplier.withPool(FabricLootPoolBuilder.builder()
 						.withEntry(ItemEntry.builder(Items.HEART_OF_THE_SEA)
-								.withCondition(RandomChanceLootCondition.builder(0.1f))
-						).withEntry(ItemEntry.builder(Items.NAUTILUS_SHELL).withCondition(RandomChanceLootCondition.builder(0.33f)))
-				);
+								.conditionally(RandomChanceLootCondition.builder(0.1f)).build()
+						).withEntry(ItemEntry.builder(Items.NAUTILUS_SHELL).conditionally(RandomChanceLootCondition.builder(0.33f)).build()).build());
 			}
 		});
 	}
@@ -70,14 +70,14 @@ public class Aquarius implements ModInitializer {
 	}
 
 	public static BlockEntityType register(String name, Supplier<BlockEntity> be, Block... blocks) {
-		return Registry.register(Registry.BLOCK_ENTITY, new Identifier(MODID, name), BlockEntityType.Builder.create(be, blocks).build(null));
+		return Registry.register(Registry.BLOCK_ENTITY_TYPE, new Identifier(MODID, name), BlockEntityType.Builder.create(be, blocks).build(null));
 	}
 
 	public static Enchantment register(String name, Enchantment enchantment) {
 		return Registry.register(Registry.ENCHANTMENT, new Identifier(MODID, name), enchantment);
 	}
 
-	public static <T extends Entity> EntityType<T> register(String name, EntityCategory category, EntityDimensions size, EntityType.EntityFactory<T> factory) {
+	public static <T extends Entity> EntityType<T> register(String name, SpawnGroup category, EntityDimensions size, EntityType.EntityFactory<T> factory) {
 		return Registry.register(Registry.ENTITY_TYPE, new Identifier(MODID, name), FabricEntityTypeBuilder.create(category, factory).size(size).disableSaving().build());
 	}
 }

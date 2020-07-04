@@ -7,18 +7,22 @@ import net.minecraft.entity.EquipmentSlot;
 
 public class GuardianSightEnchantment extends Enchantment {
 	protected GuardianSightEnchantment() {
-		super(Weight.COMMON, EnchantmentTarget.TRIDENT, new EquipmentSlot[]{EquipmentSlot.MAINHAND});
+		super(Rarity.COMMON, EnchantmentTarget.TRIDENT, new EquipmentSlot[]{EquipmentSlot.MAINHAND});
 	}
 
-	public int getMinimumPower(int level) {
-		return 1 + (level - 1) * 10;
-	}
 
-	public int getMaximumLevel() {
+	@Override
+	public int getMaxLevel() {
 		return 4;
 	}
 
-	public boolean differs(Enchantment enchantment) {
-		return super.differs(enchantment) && enchantment != Enchantments.RIPTIDE && enchantment != Enchantments.CHANNELING && enchantment != Enchantments.LOYALTY;
+	@Override
+	public int getMaxPower(int level) {
+		return 1 + (level - 1) * 10;
+	}
+
+	@Override
+	protected boolean canAccept(Enchantment enchantment) {
+		return super.canAccept(enchantment) && enchantment != Enchantments.RIPTIDE && enchantment != Enchantments.CHANNELING && enchantment != Enchantments.LOYALTY;
 	}
 }

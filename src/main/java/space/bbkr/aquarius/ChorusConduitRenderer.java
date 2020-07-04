@@ -56,8 +56,7 @@ public class ChorusConduitRenderer extends BlockEntityRenderer<ChorusConduitBloc
             l += l * l;
             stack.push();
             stack.translate(0.5D, (0.3F + l * 0.2F), 0.5D);
-            Vector3f vector3f = new Vector3f(0.5F, 1.0F, 0.5F);
-            vector3f.reciprocal();
+            Vector3f vector3f = new Vector3f(1/0.5F, 1.0F, 1/0.5F);
             stack.multiply(new Quaternion(vector3f, k, true));
             this.cageModel.render(stack, CAGE_TEX.getVertexConsumer(provider, RenderLayer::getEntityCutoutNoCull), i, j);
             stack.pop();
@@ -80,7 +79,7 @@ public class ChorusConduitRenderer extends BlockEntityRenderer<ChorusConduitBloc
             stack.multiply(Vector3f.POSITIVE_Z.getDegreesQuaternion(180.0F));
             this.windModel.render(stack, windConsumer, i, j);
             stack.pop();
-            Camera camera = this.blockEntityRenderDispatcher.camera;
+            Camera camera = this.dispatcher.camera;
             stack.push();
             stack.translate(0.5D, (0.3F + l * 0.2F), 0.5D);
             stack.scale(0.5F, 0.5F, 0.5F);

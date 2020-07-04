@@ -33,7 +33,7 @@ public abstract class MixinPlayerEntity extends LivingEntity {
     private void updateTurtleHelmet(CallbackInfo ci) {
         ItemStack stackFeet = this.getEquippedStack(EquipmentSlot.FEET);
         if (stackFeet.getItem() == Aquarius.FLIPPERS) {
-            if (this.isInsideWaterOrRain()) {
+            if (this.isTouchingWaterOrRain()) {
                 swimCooldownTime = 0;
                 this.addStatusEffect(new StatusEffectInstance(StatusEffects.DOLPHINS_GRACE, 20, 0, true, false, true));
                 if (!world.isClient) {
@@ -52,17 +52,19 @@ public abstract class MixinPlayerEntity extends LivingEntity {
         }
     }
 
+
+
     @Override
-    public boolean isInsideWaterOrRain() {
+    public boolean isTouchingWaterOrRain() {
         if (this.hasStatusEffect(Aquarius.ATLANTEAN)) return true;
-        return super.isInsideWaterOrRain();
+        return super.isTouchingWaterOrRain();
     }
 
     @Inject(method = "updateSwimming", at = @At("TAIL"))
     private void updateAirSwimming(CallbackInfo ci) {
         if (this.hasStatusEffect(Aquarius.ATLANTEAN)) {
             this.setSwimming(this.isSprinting() && !this.hasVehicle());
-            this.insideWater = this.isSwimming();
+            this.submergedInWater = this.isSwimming();
             if (this.isSwimming()) {
                 this.fallDistance = 0.0F;
                 Vec3d look = this.getRotationVector();

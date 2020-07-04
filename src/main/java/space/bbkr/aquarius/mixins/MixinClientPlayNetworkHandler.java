@@ -1,13 +1,11 @@
 package space.bbkr.aquarius.mixins;
 
 import net.minecraft.client.network.ClientPlayNetworkHandler;
-import net.minecraft.client.network.packet.EntitySpawnS2CPacket;
-import net.minecraft.client.sound.RidingMinecartSoundInstance;
 import net.minecraft.client.world.ClientWorld;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.entity.vehicle.AbstractMinecartEntity;
+import net.minecraft.network.packet.s2c.play.EntitySpawnS2CPacket;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;
 import org.spongepowered.asm.mixin.injection.At;
@@ -22,7 +20,7 @@ public class MixinClientPlayNetworkHandler {
 
     @Shadow private ClientWorld world;
 
-    @Inject(method = "onEntitySpawn", at = @At(value = "INVOKE_ASSIGN", target = "Lnet/minecraft/client/network/packet/EntitySpawnS2CPacket;getEntityTypeId()Lnet/minecraft/entity/EntityType;"), cancellable = true, locals = LocalCapture.CAPTURE_FAILEXCEPTION)
+    @Inject(method = "onEntitySpawn", at = @At(value = "INVOKE_ASSIGN", target = "Lnet/minecraft/network/packet/s2c/play/EntitySpawnS2CPacket;getEntityTypeId()Lnet/minecraft/entity/EntityType;"), cancellable = true, locals = LocalCapture.CAPTURE_FAILEXCEPTION)
     private void spawnTridentBeam(EntitySpawnS2CPacket packet, CallbackInfo ci, double x, double y, double z, EntityType type) {
         if (type == Aquarius.TRIDENT_BEAM) {
             Entity owner = world.getEntityById(packet.getEntityData());

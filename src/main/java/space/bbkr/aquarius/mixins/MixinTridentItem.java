@@ -3,6 +3,7 @@ package space.bbkr.aquarius.mixins;
 import net.minecraft.enchantment.EnchantmentHelper;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.player.PlayerEntity;
+import net.minecraft.entity.projectile.PersistentProjectileEntity;
 import net.minecraft.entity.projectile.ProjectileEntity;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
@@ -42,7 +43,7 @@ public abstract class MixinTridentItem extends Item {
 		if (ticksLeft < getMaxUseTime(stack) && ticksLeft % 20 == 0) {
 			TridentBeamEntity beam = new TridentBeamEntity(world, user, sightLevel);
 			beam.setProperties(user, user.pitch, user.yaw, 0.0F, 2.5F, 1.0F);
-			beam.pickupType = ProjectileEntity.PickupPermission.DISALLOWED;
+			beam.pickupType = PersistentProjectileEntity.PickupPermission.DISALLOWED;
 			world.spawnEntity(beam);
 			if (ticksLeft == getMaxUseTime(stack) - 20 && user instanceof PlayerEntity) world.playSoundFromEntity((PlayerEntity)user, beam, SoundEvents.ENTITY_ELDER_GUARDIAN_CURSE, SoundCategory.PLAYERS, 0.8F, 1.0F);
 			stack.damage(sightLevel, user, (entity) -> entity.getStackInHand(user.getActiveHand()));

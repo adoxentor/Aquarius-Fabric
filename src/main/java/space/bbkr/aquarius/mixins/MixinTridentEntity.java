@@ -4,6 +4,7 @@ import net.minecraft.enchantment.EnchantmentHelper;
 import net.minecraft.enchantment.Enchantments;
 import net.minecraft.entity.*;
 import net.minecraft.entity.damage.DamageSource;
+import net.minecraft.entity.projectile.PersistentProjectileEntity;
 import net.minecraft.entity.projectile.ProjectileEntity;
 import net.minecraft.entity.projectile.TridentEntity;
 import net.minecraft.item.ItemStack;
@@ -22,7 +23,7 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 import org.spongepowered.asm.mixin.injection.callback.LocalCapture;
 
 @Mixin(TridentEntity.class)
-public abstract class MixinTridentEntity extends ProjectileEntity {
+public abstract class MixinTridentEntity extends PersistentProjectileEntity {
 
     @Shadow
     private ItemStack tridentStack;
@@ -44,9 +45,10 @@ public abstract class MixinTridentEntity extends ProjectileEntity {
         if ((this.world.isThundering() && EnchantmentHelper.hasChanneling(this.tridentStack)) || (this.world.isRaining() && getChannelingLevel(tridentStack) >= 2) || getChannelingLevel(tridentStack) == 3) {
             BlockPos entityPos = new BlockPos(target.getPos());
             if (this.world.isSkyVisible(entityPos)) {
-                LightningEntity lightning = new LightningEntity(this.world, entityPos.getX(), entityPos.getY(), entityPos.getZ(), false);
+                LightningEntity lightning = new LightningEntity(EntityType.LIGHTNING_BOLT,this.world);
+                lightning.teleport(entityPos.getX(), entityPos.getY(), entityPos.getZ());
                 lightning.setChanneller(this.getOwner() instanceof ServerPlayerEntity ? (ServerPlayerEntity) this.getOwner() : null);
-                ((ServerWorld)this.world).addLightning(lightning);
+                this.world.spawnEntity(lightning);
                 hitSound = SoundEvents.ITEM_TRIDENT_THUNDER;
                 hitVolume = 5.0F;
             }
