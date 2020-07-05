@@ -63,8 +63,9 @@ public abstract class MixinPlayerEntity extends LivingEntity {
     @Inject(method = "updateSwimming", at = @At("TAIL"))
     private void updateAirSwimming(CallbackInfo ci) {
         if (this.hasStatusEffect(Aquarius.ATLANTEAN)) {
-            this.setSwimming(this.isSprinting() && !this.hasVehicle());
+            this.setSwimming(this.jumping && !this.hasVehicle());
             this.submergedInWater = this.isSwimming();
+            this.setNoGravity(this.isSwimming());
             if (this.isSwimming()) {
                 this.fallDistance = 0.0F;
                 Vec3d look = this.getRotationVector();
