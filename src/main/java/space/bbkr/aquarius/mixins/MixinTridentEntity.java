@@ -47,7 +47,7 @@ public abstract class MixinTridentEntity extends PersistentProjectileEntity {
             if (this.world.isSkyVisible(entityPos)) {
                 LightningEntity lightning = new LightningEntity(EntityType.LIGHTNING_BOLT,this.world);
                 lightning.teleport(entityPos.getX(), entityPos.getY(), entityPos.getZ());
-                lightning.setChanneller(this.getOwner() instanceof ServerPlayerEntity ? (ServerPlayerEntity) this.getOwner() : null);
+                lightning.setChanneler(this.getOwner() instanceof ServerPlayerEntity ? (ServerPlayerEntity) this.getOwner() : null);
                 this.world.spawnEntity(lightning);
                 hitSound = SoundEvents.ITEM_TRIDENT_THUNDER;
                 hitVolume = 5.0F;
