@@ -94,11 +94,11 @@ public class ChorusConduitRenderer extends BlockEntityRenderer<ChorusConduitBloc
     }
 
     static {
-        BASE_TEX = new SpriteIdentifier(SpriteAtlasTexture.BLOCK_ATLAS_TEX, new Identifier(Aquarius.MODID, "entity/chorus_conduit/base"));
-        CAGE_TEX = new SpriteIdentifier(SpriteAtlasTexture.BLOCK_ATLAS_TEX, new Identifier(Aquarius.MODID, "entity/chorus_conduit/cage"));
-        WIND_TEX = new SpriteIdentifier(SpriteAtlasTexture.BLOCK_ATLAS_TEX, new Identifier(Aquarius.MODID, "entity/chorus_conduit/wind"));
-        WIND_VERTICAL_TEX = new SpriteIdentifier(SpriteAtlasTexture.BLOCK_ATLAS_TEX, new Identifier(Aquarius.MODID, "entity/chorus_conduit/wind_vertical"));
-        OPEN_EYE_TEX = new SpriteIdentifier(SpriteAtlasTexture.BLOCK_ATLAS_TEX, new Identifier(Aquarius.MODID, "entity/chorus_conduit/open_eye"));
-        CLOSED_EYE_TEX = new SpriteIdentifier(SpriteAtlasTexture.BLOCK_ATLAS_TEX, new Identifier(Aquarius.MODID, "entity/chorus_conduit/closed_eye"));
+        BASE_TEX = new SpriteIdentifier(SpriteAtlasTexture.BLOCK_ATLAS_TEXTURE, new Identifier(Aquarius.MODID, "entity/chorus_conduit/base"));
+        CAGE_TEX = new SpriteIdentifier(SpriteAtlasTexture.BLOCK_ATLAS_TEXTURE, new Identifier(Aquarius.MODID, "entity/chorus_conduit/cage"));
+        WIND_TEX = new SpriteIdentifier(SpriteAtlasTexture.BLOCK_ATLAS_TEXTURE, new Identifier(Aquarius.MODID, "entity/chorus_conduit/wind"));
+        WIND_VERTICAL_TEX = new SpriteIdentifier(SpriteAtlasTexture.BLOCK_ATLAS_TEXTURE, new Identifier(Aquarius.MODID, "entity/chorus_conduit/wind_vertical"));
+        OPEN_EYE_TEX = new SpriteIdentifier(SpriteAtlasTexture.BLOCK_ATLAS_TEXTURE, new Identifier(Aquarius.MODID, "entity/chorus_conduit/open_eye"));
+        CLOSED_EYE_TEX = new SpriteIdentifier(SpriteAtlasTexture.BLOCK_ATLAS_TEXTURE, new Identifier(Aquarius.MODID, "entity/chorus_conduit/closed_eye"));
     }
 }

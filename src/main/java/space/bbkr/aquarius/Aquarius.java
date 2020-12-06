@@ -26,7 +26,7 @@ public class Aquarius implements ModInitializer {
 	
 	public static final String MODID = "aquarius";
 
-	public static final Block CHORUS_CONDUIT = register("chorus_conduit", new ChorusConduitBlock(AbstractBlock.Settings.of(Material.GLASS).strength(3.0F, 3.0F).lightLevel(state->15)), ItemGroup.MISC);
+	public static final Block CHORUS_CONDUIT = register("chorus_conduit", new ChorusConduitBlock(AbstractBlock.Settings.of(Material.GLASS).strength(3.0F, 3.0F).luminance(state->15)), ItemGroup.MISC);
 	public static final Item FLIPPERS = register("flippers", new ArmorItem(ArmorMaterials.TURTLE, EquipmentSlot.FEET, new Item.Settings().group(ItemGroup.COMBAT)));
     public static final Item PRISMARINE_ROD = register("prismarine_rod", new Item(new Item.Settings().group(ItemGroup.MISC)));
     public static final BlockEntityType<ChorusConduitBlockEntity> CHORUS_CONDUIT_BE = register("chorus_conduit", ChorusConduitBlockEntity::new, CHORUS_CONDUIT);
