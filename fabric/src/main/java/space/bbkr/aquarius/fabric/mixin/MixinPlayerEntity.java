@@ -107,7 +107,13 @@ public abstract class MixinPlayerEntity extends LivingEntity implements IAirSwim
                 }
             }
         } else if (this.lastSwimming) {
-            NETWORK.sendToServer(new AirSwimmingC2SMsg(false));
+            if(!this.world.isClient){
+                serverSwimming = 0;
+            }
+            else
+            {
+                NETWORK.sendToServer(new AirSwimmingC2SMsg(false));
+            }
         }
         this.lastSwimming = this.isSwimming();
     }
@@ -115,5 +121,4 @@ public abstract class MixinPlayerEntity extends LivingEntity implements IAirSwim
 
     private static void airSwimming(MixinPlayerEntity playerEntity) {
     }
-
 }
